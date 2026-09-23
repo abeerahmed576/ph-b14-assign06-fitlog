@@ -1,0 +1,29 @@
+@import "tailwindcss";
+@plugin "daisyui";
+
+/* To force Tailwind to always apply dark mode (needs class="dark" applied to <html>) */
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --background: black;
+  --brand: #c2f800;
+  --brand-shade: #1a2312;
+  --display: #9ca3af;
+  --display-light: #e5e7eb;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-brand: var(--brand);
+  --color-brand-shade: var(--brand-shade);
+  --color-display: var(--display);
+  --color-display-light: var(--display-light);
+  --font-brand: var(--font-oswald);
+  --font-sans: var(--font-inter);
+}
+
+html,
+body {
+  @apply bg-background;
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+}
