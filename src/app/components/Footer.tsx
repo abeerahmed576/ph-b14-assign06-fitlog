@@ -1,15 +1,15 @@
 import Image from "next/image";
+import FitlogLogo from "./shared/FitlogLogo";
 
 function Footer() {
   return (
-    <footer className="p-5 container mx-auto flex justify-between">
-      <div className="flex gap-2">
-        <Image src="/logo.png" alt="fitlog logo" width={24} height={20} />
-        <p className="font-bold font-brand uppercase">fitlog</p>
+    <footer className="h-18 sm:h-22 border-t border-t-gray-800">
+      <div className="min-h-full p-5 container mx-auto flex flex-col sm:flex-row justify-between items-center gap-2">
+        <FitlogLogo />
+        <p className="text-display text-center">
+          © 2026 FitLog — Workout Library. Train hard, log honest.
+        </p>
       </div>
-      <p className="text-display">
-        © 2026 FitLog — Workout Library. Train hard, log honest.
-      </p>
     </footer>
   );
 }

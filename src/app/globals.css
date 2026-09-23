@@ -6,6 +6,9 @@
 
 :root {
   --background: black;
+  --card-400: #1e2330;
+  --card-500: #151922;
+  --card-600: #15171d;
   --brand: #c2f800;
   --brand-shade: #1a2312;
   --display: #9ca3af;
@@ -14,6 +17,9 @@
 
 @theme inline {
   --color-background: var(--background);
+  --color-card-400: var(--card-400);
+  --color-card-500: var(--card-500);
+  --color-card-600: var(--card-600);
   --color-brand: var(--brand);
   --color-brand-shade: var(--brand-shade);
   --color-display: var(--display);
