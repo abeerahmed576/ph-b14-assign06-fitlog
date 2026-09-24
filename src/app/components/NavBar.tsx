@@ -1,6 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import FitlogLogo from "./shared/FitlogLogo";
+import { faHamburger } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 interface NavLinkProps {
   route: string;
@@ -40,8 +42,7 @@ function NavBar() {
     <header className="h-18 sm:h-22 border-b border-b-gray-800">
       <nav
         className="
-        px-2 sm:px-0
-        container min-h-full mx-auto
+        container min-h-full mx-0 sm:mx-auto
         flex justify-between items-center"
       >
         <FitlogLogo />

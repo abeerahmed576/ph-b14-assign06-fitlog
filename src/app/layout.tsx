@@ -18,6 +18,11 @@ export const metadata: Metadata = {
   title: "Home - Fit Log",
 };
 
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+};
+
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
@@ -28,7 +33,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <link rel="icon" href="/favicon.ico" sizes="any" />
       </head>
 
-      <body className="">
+      <body>
         <NavBar />
         {children}
         <Footer />
