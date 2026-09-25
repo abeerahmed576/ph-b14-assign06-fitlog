@@ -62,8 +62,8 @@ async function WorkoutDetails({ params }: WorkoutDetailasProps) {
         </div>
       }
     >
-      <section className="mx-4 max-w-fit md:mx-auto my-7 sm:my-20 container flex flex-col lg:flex-row gap-10 items-center justify-center">
-        <div className="relative w-full lg:w-160 h-100 sm:h-200 rounded-2xl overflow-hidden">
+      <section className="w-11/12 mx-4 sm:mx-0 md:mx-auto my-7 sm:my-20 container flex flex-col lg:flex-row gap-10 items-center justify-center">
+        <div className="relative w-full lg:w-170 h-100 sm:h-200 rounded-2xl overflow-hidden">
           <Image
             src={data.image}
             alt={data.name}

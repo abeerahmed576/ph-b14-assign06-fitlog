@@ -40,7 +40,7 @@ function WorkoutCard({ data }: { data: IWorkout }) {
             loading="eager"
           />
         </div>
-        <div className="p-6 space-y-1 bg-card-500">
+        <div className="p-6 space-y-2 bg-card-500">
           <div>
             {data.muscleGroups.map((item: string, index) => (
               <span

@@ -17,10 +17,11 @@ const NavLink = ({ route, label }: NavLinkProps) => {
   return (
     <Link
       href={route}
-      className="px-4 py-1 rounded-full font-medium text-brand bg-brand-shade capitalize"
+      className="px-4 py-1 rounded-full font-medium text-display capitalize"
     >
       {label}
     </Link>
+    // text-brand bg-brand-shade
   );
 };
 

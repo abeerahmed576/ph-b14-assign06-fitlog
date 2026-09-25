@@ -11,7 +11,10 @@ async function WorkoutContainer() {
   const datas: IWorkout[] = await getWorkouts();
 
   return (
-    <section id="library" className="container mx-auto mb-10">
+    <section
+      id="library"
+      className="w-11/12 sm:min-w-fit container mx-auto mb-10"
+    >
       <div className="mb-8 text-center sm:text-start">
         <h2 className="uppercase text-3xl font-brand font-bold">the library</h2>
         <p className="text-display text-sm sm:text-base">
