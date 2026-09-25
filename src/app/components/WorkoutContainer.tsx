@@ -14,7 +14,7 @@ async function WorkoutContainer() {
     <section id="library" className="container mx-auto mb-10">
       <div className="mb-8 text-center sm:text-start">
         <h2 className="uppercase text-3xl font-brand font-bold">the library</h2>
-        <p className="text-display">
+        <p className="text-display text-sm sm:text-base">
           Twelve lifts covering every major muscle group.
         </p>
       </div>
@@ -26,7 +26,7 @@ async function WorkoutContainer() {
           </div>
         }
       >
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {datas.map((data) => (
             <WorkoutCard key={data.id} data={data} />
           ))}

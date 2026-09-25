@@ -28,8 +28,10 @@ const getWorkout = async (url: string) => {
 function InfoStrip({ info, label }: { info: string | number; label: string }) {
   return (
     <tr className="py-4 px-7 flex border-b border-b-gray-800 justify-between items-center">
-      <td className="font-medium text-display capitalize">{label}</td>
-      <td className="text-display-light">{info}</td>
+      <td className="font-medium text-display text-sm sm:text-base capitalize">
+        {label}
+      </td>
+      <td className="text-display-light text-sm sm:text-base">{info}</td>
     </tr>
   );
 }
@@ -60,8 +62,8 @@ async function WorkoutDetails({ params }: WorkoutDetailasProps) {
         </div>
       }
     >
-      <section className="mx-4 sm:mx-auto my-7 sm:my-20 container flex flex-col sm:flex-row gap-12 items-center justify-center">
-        <div className="relative w-full sm:w-160 h-100 sm:h-200 rounded-2xl overflow-hidden">
+      <section className="mx-4 max-w-fit md:mx-auto my-7 sm:my-20 container flex flex-col lg:flex-row gap-10 items-center justify-center">
+        <div className="relative w-full lg:w-160 h-100 sm:h-200 rounded-2xl overflow-hidden">
           <Image
             src={data.image}
             alt={data.name}
@@ -74,7 +76,9 @@ async function WorkoutDetails({ params }: WorkoutDetailasProps) {
             <h1 className="font-brand font-bold uppercase text-3xl sm:text-4xl">
               {data.name}
             </h1>
-            <p className="text-display text-lg">{data.description}</p>
+            <p className="text-display text-sm sm:text-lg">
+              {data.description}
+            </p>
             <div>
               {data.muscleGroups.map((item: string, index) => (
                 <span
@@ -102,8 +106,12 @@ async function WorkoutDetails({ params }: WorkoutDetailasProps) {
             <div>
               {data.instructions.map((item, index) => (
                 <p key={index} className="my-2">
-                  <span className="text-display mr-2">{index + 1}.</span>
-                  <span className="text-mist-300">{item}</span>
+                  <span className=" mr-2 text-display text-xm sm:text-base">
+                    {index + 1}.
+                  </span>
+                  <span className="text-mist-300 text-xm sm:text-base">
+                    {item}
+                  </span>
                 </p>
               ))}
             </div>
