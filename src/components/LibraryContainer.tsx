@@ -7,7 +7,7 @@ const getWorkouts = async () => {
   return res.json();
 };
 
-async function WorkoutContainer() {
+async function LibraryContainer() {
   const datas: IWorkout[] = await getWorkouts();
 
   return (
@@ -39,4 +39,4 @@ async function WorkoutContainer() {
   );
 }
 
-export default WorkoutContainer;
+export default LibraryContainer;

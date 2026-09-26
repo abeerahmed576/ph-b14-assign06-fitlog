@@ -1,23 +1,18 @@
-import { IWorkout } from "@/app/types/Workout.type";
+import { Metadata } from "next";
+import { IWorkout } from "@/types/Workout.type";
 import Image from "next/image";
 import { Suspense } from "react";
-import {
-  faCalendar,
-  faBookmark,
-  IconDefinition,
-} from "@fortawesome/free-regular-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import AddToPlanButton from "@/components/workouts/AddToPlanButton";
+import SaveForLaterButton from "@/components/workouts/SaveForLaterButton";
+
+export const metadata: Metadata = {
+  title: "Workout Details - Fit Log",
+};
 
 interface WorkoutDetailasProps {
   params: {
     id: number;
   };
-}
-
-interface CardButtonProps {
-  icon: IconDefinition;
-  label: string;
-  specialClasses: string;
 }
 
 const getWorkout = async (url: string) => {
@@ -33,17 +28,6 @@ function InfoStrip({ info, label }: { info: string | number; label: string }) {
       </td>
       <td className="text-display-light text-sm sm:text-base">{info}</td>
     </tr>
-  );
-}
-
-function CardButton({ icon, label, specialClasses }: CardButtonProps) {
-  return (
-    <button
-      className={`btn w-full sm:w-max px-10 py-6 sm:py-5 capitalize rounded-xl ${specialClasses ? specialClasses : ""}`}
-    >
-      <FontAwesomeIcon className="size-4" icon={icon} />
-      {label}
-    </button>
   );
 }
 
@@ -117,16 +101,8 @@ async function WorkoutDetails({ params }: WorkoutDetailasProps) {
             </div>
           </div>
           <div className="space-x-4 space-y-4 sm:space-y-0">
-            <CardButton
-              icon={faCalendar}
-              label="add to today's plan"
-              specialClasses="text-black bg-brand"
-            />
-            <CardButton
-              icon={faBookmark}
-              label="save for later"
-              specialClasses="border border-gray-600 bg-transparent text-display-light"
-            />
+            <AddToPlanButton data={data} />
+            <SaveForLaterButton data={data} />
           </div>
         </div>
       </section>

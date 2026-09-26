@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { IWorkout } from "@/app/types/Workout.type";
+import { IWorkout } from "@/types/Workout.type";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faClock,

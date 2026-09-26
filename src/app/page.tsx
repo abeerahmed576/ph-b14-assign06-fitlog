@@ -1,12 +1,12 @@
 import Image from "next/image";
-import Hero from "./components/Hero";
-import WorkoutContainer from "./components/WorkoutContainer";
+import Hero from "../components/Hero";
+import LibraryContainer from "../components/LibraryContainer";
 
 export default function Home() {
   return (
     <main className="">
       <Hero />
-      <WorkoutContainer />
+      <LibraryContainer />
     </main>
   );
 }
