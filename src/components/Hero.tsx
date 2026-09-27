@@ -30,7 +30,7 @@ function Hero() {
         <Link href="/#library">
           <button className="w-70 sm:w-fit px-8 py-6 sm:py-5 capitalize text-black btn bg-brand rounded-lg">
             browse workouts
-            <FontAwesomeIcon icon={faArrowDown} />
+            <FontAwesomeIcon className="size-4" icon={faArrowDown} />
           </button>
         </Link>
       </div>
