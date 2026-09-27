@@ -33,14 +33,16 @@ const NavLink = ({ route, label }: NavLinkProps) => {
 
 const NavButton = ({ label, count }: NavButtonProps) => {
   return (
-    <button className="btn btn-ghost rounded-full capitalize px-1.5 sm:px-3 text-xs sm:text-base">
-      {label}
-      <span
-        className={`px-1.5 rounded-full ${label === "plan" ? "bg-brand text-black" : "border border-gray-600 text-display-light"}`}
-      >
-        {count}
-      </span>
-    </button>
+    <Link href="/my-plan">
+      <button className="btn btn-ghost rounded-full capitalize px-1.5 sm:px-3 text-xs sm:text-base">
+        {label}
+        <span
+          className={`px-1.5 rounded-full ${label === "plan" ? "bg-brand text-black" : "border border-gray-600 text-display-light"}`}
+        >
+          {count}
+        </span>
+      </button>
+    </Link>
   );
 };
 

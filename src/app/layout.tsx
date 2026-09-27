@@ -4,6 +4,7 @@ import "./globals.css";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
 import MyPlanProvider from "../contexts/MyPlanContext";
+import { Bounce, ToastContainer } from "react-toastify";
 
 const oswald = Oswald({
   variable: "--font-oswald",
@@ -40,6 +41,19 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           {children}
           <Footer />
         </MyPlanProvider>
+        <ToastContainer
+          position="top-right"
+          autoClose={2500}
+          hideProgressBar
+          newestOnTop={false}
+          closeOnClick={false}
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="dark"
+          transition={Bounce}
+        />
       </body>
     </html>
   );

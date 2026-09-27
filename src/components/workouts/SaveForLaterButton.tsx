@@ -5,12 +5,21 @@ import { useContext } from "react";
 import { MyPlanContext } from "@/contexts/MyPlanContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IWorkout } from "@/types/Workout.type";
+import { toast } from "react-toastify";
 
 function SaveForLaterButton({ data }: { data: IWorkout }) {
-  const { setSavedForLater } = useContext(MyPlanContext);
+  const { savedForLater, setSavedForLater } = useContext(MyPlanContext);
 
   const handleAddToPlan = () => {
-    setSavedForLater((prevSavedLater) => [...prevSavedLater, data]);
+    const isAlreadySelected = savedForLater.some((item) => item.id === data.id);
+
+    if (isAlreadySelected) {
+      toast.error("Already added to saved!");
+      return;
+    }
+
+    setSavedForLater((prevPlans) => [...prevPlans, data]);
+    toast.success("Added to saved");
   };
 
   return (

@@ -16,8 +16,16 @@ interface WorkoutDetailasProps {
 }
 
 const getWorkout = async (url: string) => {
-  const res = await fetch(url);
-  return res.json();
+  try {
+    const res = await fetch(`${url}`);
+    if (!res.ok) {
+      throw new Error("Network response was not OK");
+    }
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.error("Failed to fetch data:", error);
+  }
 };
 
 function InfoStrip({ info, label }: { info: string | number; label: string }) {
@@ -34,7 +42,7 @@ function InfoStrip({ info, label }: { info: string | number; label: string }) {
 async function WorkoutDetails({ params }: WorkoutDetailasProps) {
   const { id } = await params;
   const data: IWorkout = await getWorkout(
-    `https://api.abcz.workers.dev/api/fitlog/${id}`,
+    `https://api.api-store.workers.dev/api/fitlog/${id}`,
   );
 
   return (

@@ -4,6 +4,8 @@ import { IWorkout } from "./Workout.type";
 export interface MyPlanContextProps {
   todaysPlan: IWorkout[];
   setTodaysPlan: Dispatch<SetStateAction<IWorkout[]>>;
+  remainingPlan: IWorkout[];
+  setRemainingPlan: Dispatch<SetStateAction<IWorkout[]>>;
   savedForLater: IWorkout[];
   setSavedForLater: Dispatch<SetStateAction<IWorkout[]>>;
 }

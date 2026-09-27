@@ -1,8 +1,8 @@
 import { IWorkout } from "@/types/Workout.type";
 import EmptyPlan from "./EmptyPlan";
-import WorkoutStripCard from "../shared/WorkoutStripCard";
+import MyPlanStripCard from "./MyPlanStripCard";
 
-function WorkoutStripCardContainer({ list }: { list: IWorkout[] }) {
+function MyPlanStripCardContainer({ list }: { list: IWorkout[] }) {
   return (
     <ul className="space-y-4">
       {list.length === 0 ? (
@@ -12,7 +12,7 @@ function WorkoutStripCardContainer({ list }: { list: IWorkout[] }) {
       ) : (
         list.map((item) => (
           <li key={item.id}>
-            <WorkoutStripCard data={item} />
+            <MyPlanStripCard data={item} />
           </li>
         ))
       )}
@@ -20,4 +20,4 @@ function WorkoutStripCardContainer({ list }: { list: IWorkout[] }) {
   );
 }
 
-export default WorkoutStripCardContainer;
+export default MyPlanStripCardContainer;

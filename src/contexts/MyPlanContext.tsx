@@ -7,17 +7,22 @@ import { MyPlanContextProps } from "@/types/MyPlanContext.type";
 export const MyPlanContext = createContext<MyPlanContextProps>({
   todaysPlan: [],
   setTodaysPlan: () => {},
+  remainingPlan: [],
+  setRemainingPlan: () => {},
   savedForLater: [],
   setSavedForLater: () => {},
 });
 
 function MyPlanProvider({ children }: { children: ReactNode }) {
   const [todaysPlan, setTodaysPlan] = useState<IWorkout[]>([]);
+  const [remainingPlan, setRemainingPlan] = useState<IWorkout[]>([]);
   const [savedForLater, setSavedForLater] = useState<IWorkout[]>([]);
 
   const contextData = {
     todaysPlan,
     setTodaysPlan,
+    remainingPlan,
+    setRemainingPlan,
     savedForLater,
     setSavedForLater,
   };

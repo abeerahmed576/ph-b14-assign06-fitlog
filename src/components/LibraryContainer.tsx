@@ -1,15 +1,7 @@
 import { Suspense } from "react";
-import { IWorkout } from "../types/Workout.type";
-import WorkoutCard from "./shared/WorkoutCard";
+import WorkoutsContainer from "./homepage/WorkoutsContainer";
 
-const getWorkouts = async () => {
-  const res = await fetch("https://api.abcz.workers.dev/api/fitlog");
-  return res.json();
-};
-
-async function LibraryContainer() {
-  const datas: IWorkout[] = await getWorkouts();
-
+function LibraryContainer() {
   return (
     <section
       id="library"
@@ -29,11 +21,7 @@ async function LibraryContainer() {
           </div>
         }
       >
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {datas.map((data) => (
-            <WorkoutCard key={data.id} data={data} />
-          ))}
-        </div>
+        <WorkoutsContainer />
       </Suspense>
     </section>
   );

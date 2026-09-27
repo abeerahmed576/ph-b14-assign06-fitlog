@@ -2,8 +2,9 @@
 
 import { MyPlanContext } from "@/contexts/MyPlanContext";
 import { useContext, useState } from "react";
-import WorkoutStripCardContainer from "./WorkoutStripCardContainer";
+import MyPlanStripCardContainer from "./MyPlanStripCardContainer";
 import { CurrentTabContext } from "@/contexts/CurrentTabContext";
+import { IWorkout } from "@/types/Workout.type";
 
 interface TabButtonProps {
   value: string;
@@ -22,21 +23,37 @@ function TabButton({
     <button
       onClick={() => handleTabClick()}
       type="button"
-      className={`px-6 py-2.5 text-xs rounded-xl capitalize cursor-pointer ${currentTab === value ? "font-bold text-display-light bg-card-400 border border-mist-700" : ""}`}
+      className={`px-6 py-2.5 text-xs rounded-xl capitalize cursor-pointer font-medium ${currentTab === value ? "text-brand bg-card-400 border-mist-700" : ""}`}
     >
       {label}
     </button>
   );
 }
 
-function PlansContainer() {
+function MyPlanCardsContainer() {
   const { todaysPlan, savedForLater } = useContext(MyPlanContext);
   const { currentTab, setCurrentTab } = useContext(CurrentTabContext);
+  const [sortBy, setSortBy] = useState<"duration" | "calories" | "rating">(
+    "duration",
+  );
 
   const handleTabClick = () => {
     if (currentTab === "today") setCurrentTab("saved");
     else setCurrentTab("today");
   };
+
+  const sortWorkouts = (workouts: IWorkout[]) => {
+    const toSort = [...workouts];
+    if (sortBy === "duration") toSort.sort((a, b) => a.duration - b.duration);
+    else if (sortBy === "calories")
+      toSort.sort((a, b) => b.caloriesBurned - a.caloriesBurned);
+    else if (sortBy === "rating") toSort.sort((a, b) => b.rating - a.rating);
+
+    return toSort;
+  };
+
+  const sortedTodaysPlan = sortWorkouts(todaysPlan);
+  const sortedSavedForLater = sortWorkouts(savedForLater);
 
   return (
     <>
@@ -62,7 +79,13 @@ function PlansContainer() {
           <span className="label-text min-w-max ml-1 sm:ml-0 sm:mb-0 text-display">
             Sort By
           </span>
-          <select className="select rounded-xl">
+          <select
+            value={sortBy}
+            onChange={(e) =>
+              setSortBy(e.target.value as "duration" | "calories" | "rating")
+            }
+            className="select rounded-xl"
+          >
             <option value="duration">Duration</option>
             <option value="calories">Calories</option>
             <option value="rating">Rating</option>
@@ -70,12 +93,12 @@ function PlansContainer() {
         </label>
       </div>
       {currentTab === "today" ? (
-        <WorkoutStripCardContainer list={todaysPlan} />
+        <MyPlanStripCardContainer list={sortedTodaysPlan} />
       ) : (
-        <WorkoutStripCardContainer list={savedForLater} />
+        <MyPlanStripCardContainer list={sortedSavedForLater} />
       )}
     </>
   );
 }
 
-export default PlansContainer;
+export default MyPlanCardsContainer;

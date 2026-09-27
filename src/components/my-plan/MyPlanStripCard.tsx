@@ -9,9 +9,10 @@ import {
 import { faCircleXmark, faFire } from "@fortawesome/free-solid-svg-icons";
 import { faInfo, faCheck } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
-import { useContext } from "react";
+import { Dispatch, SetStateAction, useContext } from "react";
 import { CurrentTabContext } from "@/contexts/CurrentTabContext";
 import { MyPlanContext } from "@/contexts/MyPlanContext";
+import { toast } from "react-toastify";
 
 interface WorkoutInfoBadgeProps {
   info: number;
@@ -45,21 +46,65 @@ function ViewDetailsButton({ id }: { id: number }) {
   );
 }
 
-function WorkoutStripCard({ data }: WorkoutStringCardProps) {
-  const { todaysPlan, setTodaysPlan, savedForLater, setSavedForLater } =
-    useContext(MyPlanContext);
+function MarkAsDoneButton({
+  workout,
+  currentTab,
+  remainingPlan,
+  setRemainingPlan,
+}: {
+  workout: IWorkout;
+  currentTab: "today" | "saved";
+  remainingPlan: IWorkout[];
+  setRemainingPlan: Dispatch<SetStateAction<IWorkout[]>>;
+}) {
+  const handleMarkAsDone = () => {
+    setRemainingPlan(
+      remainingPlan.filter((item: IWorkout) => item.id !== workout.id),
+    );
+    toast.success("Logged completion. Good job!");
+  };
+
+  const isBtnPressed = !remainingPlan.some((item) => item.id === workout.id);
+
+  return (
+    <button
+      disabled={isBtnPressed}
+      onClick={handleMarkAsDone}
+      className={`btn mr-2 px-3 py-2 font-medium text-xs lg:text-base capitalize rounded-full ${isBtnPressed ? "btn-disabled" : "text-black bg-brand"} ${currentTab === "saved" ? "hidden" : ""}`}
+    >
+      <FontAwesomeIcon className="size-3" icon={faCheck} />
+      {isBtnPressed ? "completed" : "mark as done"}
+    </button>
+  );
+}
+
+function MyPlanStripCard({ data }: WorkoutStringCardProps) {
+  const {
+    todaysPlan,
+    setTodaysPlan,
+    remainingPlan,
+    setRemainingPlan,
+    savedForLater,
+    setSavedForLater,
+  } = useContext(MyPlanContext);
   const { currentTab } = useContext(CurrentTabContext);
 
   const handleRemoveFromPlan = (workout: IWorkout) => {
-    if (currentTab === "today")
-      setTodaysPlan(
-        todaysPlan.filter((item: IWorkout) => item.id !== workout.id),
-      );
-    else if (currentTab === "saved")
+    if (currentTab === "today") {
+      if (remainingPlan.some((item) => item.id === workout.id)) {
+        toast.error("Mark it as done first to remove it!");
+        return;
+      } else
+        setTodaysPlan(
+          todaysPlan.filter((item: IWorkout) => item.id !== workout.id),
+        );
+      toast.info("Removed from today's plan.");
+    } else if (currentTab === "saved") {
       setSavedForLater(
         savedForLater.filter((item: IWorkout) => item.id !== workout.id),
       );
-    // toast.info(`${techInfo.name} removed from Stack.`);
+      toast.info("Removed from saved.");
+    }
   };
 
   return (
@@ -92,17 +137,23 @@ function WorkoutStripCard({ data }: WorkoutStringCardProps) {
       <div className="space-x-4 min-w-max flex justify-between items-center gap-2">
         <div>
           <ViewDetailsButton id={data.id} />
-          <button
-            onClick={() => handleRemoveFromPlan(data)}
+          <MarkAsDoneButton
+            workout={data}
+            currentTab={currentTab}
+            remainingPlan={remainingPlan}
+            setRemainingPlan={setRemainingPlan}
+          />
+          {/* <button
+            onClick={() => handleMarkAsDone(data)}
             className={`btn mr-2 px-3 py-2 font-medium text-xs lg:text-base capitalize rounded-full text-black bg-brand ${currentTab === "saved" ? "hidden" : ""}`}
           >
             <FontAwesomeIcon className="size-3" icon={faCheck} />
             mark as done
-          </button>
+          </button> */}
         </div>
         <FontAwesomeIcon
           onClick={() => handleRemoveFromPlan(data)}
-          className="mr-2 size-5 text-display cursor-pointer"
+          className="mr-2 size-6 text-display cursor-pointer hover:text-rose-500"
           icon={faCircleXmark}
         />
       </div>
@@ -110,4 +161,4 @@ function WorkoutStripCard({ data }: WorkoutStringCardProps) {
   );
 }
 
-export default WorkoutStripCard;
+export default MyPlanStripCard;

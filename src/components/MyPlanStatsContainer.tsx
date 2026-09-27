@@ -1,13 +1,10 @@
 "use client";
 
 import { useContext, useEffect } from "react";
-import CurrentTabProvider from "@/contexts/CurrentTabContext";
 import { CurrentTabContext } from "@/contexts/CurrentTabContext";
 import { MyPlanContext } from "@/contexts/MyPlanContext";
-import PlanCardsContainer from "./my-plan/PlanCardsContainer";
-import TodaysStatsProvider, {
-  TodaysStatsContext,
-} from "@/contexts/TodaysStatsContext";
+import MyPlanCardsContainer from "./my-plan/MyPlanCardsContainer";
+import { TodaysStatsContext } from "@/contexts/TodaysStatsContext";
 import { IWorkout } from "@/types/Workout.type";
 
 interface PlanInfoProps {
@@ -31,7 +28,7 @@ function PlanInfo({ label, info, specialClasses }: PlanInfoProps) {
 
 function MyPlanStatsContainer() {
   const { currentTab } = useContext(CurrentTabContext);
-  const { todaysPlan, savedForLater } = useContext(MyPlanContext);
+  const { remainingPlan, savedForLater } = useContext(MyPlanContext);
   const { todaysStats, setTodaysStats } = useContext(TodaysStatsContext);
 
   useEffect(() => {
@@ -49,9 +46,9 @@ function MyPlanStatsContainer() {
       });
     };
 
-    if (currentTab === "today") updateStats(todaysPlan);
+    if (currentTab === "today") updateStats(remainingPlan);
     else if (currentTab === "saved") updateStats(savedForLater);
-  }, [currentTab, todaysPlan, savedForLater]);
+  }, [currentTab, remainingPlan, savedForLater]);
 
   return (
     <>
@@ -64,7 +61,7 @@ function MyPlanStatsContainer() {
         <PlanInfo label="minutes" info={todaysStats.minutes} />
         <PlanInfo label="calories" info={todaysStats.calories} />
       </div>
-      <PlanCardsContainer />
+      <MyPlanCardsContainer />
     </>
   );
 }
