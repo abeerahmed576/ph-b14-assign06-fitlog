@@ -4,7 +4,7 @@ import { MyPlanContext } from "@/contexts/MyPlanContext";
 import { useContext, useState } from "react";
 import MyPlanStripCardContainer from "./MyPlanStripCardContainer";
 import { CurrentTabContext } from "@/contexts/CurrentTabContext";
-import { IWorkout } from "@/types/Workout.type";
+import sort from "@/lib/sort";
 
 interface TabButtonProps {
   value: string;
@@ -23,7 +23,7 @@ function TabButton({
     <button
       onClick={() => handleTabClick()}
       type="button"
-      className={`px-6 py-2.5 text-xs rounded-xl capitalize cursor-pointer font-medium ${currentTab === value ? "text-brand bg-card-400 border-mist-700" : ""}`}
+      className={`px-6 py-2.5 text-xs rounded-xl capitalize cursor-pointer font-medium ${currentTab === value ? "text-brand bg-card-400" : ""}`}
     >
       {label}
     </button>
@@ -42,18 +42,8 @@ function MyPlanCardsContainer() {
     else setCurrentTab("today");
   };
 
-  const sortWorkouts = (workouts: IWorkout[]) => {
-    const toSort = [...workouts];
-    if (sortBy === "duration") toSort.sort((a, b) => a.duration - b.duration);
-    else if (sortBy === "calories")
-      toSort.sort((a, b) => b.caloriesBurned - a.caloriesBurned);
-    else if (sortBy === "rating") toSort.sort((a, b) => b.rating - a.rating);
-
-    return toSort;
-  };
-
-  const sortedTodaysPlan = sortWorkouts(todaysPlan);
-  const sortedSavedForLater = sortWorkouts(savedForLater);
+  const sortedTodaysPlan = sort(sortBy, todaysPlan);
+  const sortedSavedForLater = sort(sortBy, savedForLater);
 
   return (
     <>

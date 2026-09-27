@@ -16,16 +16,13 @@ interface WorkoutDetailasProps {
 }
 
 const getWorkout = async (url: string) => {
-  try {
-    const res = await fetch(`${url}`);
-    if (!res.ok) {
-      throw new Error("Network response was not OK");
-    }
-    const data = await res.json();
-    return data;
-  } catch (error) {
-    console.error("Failed to fetch data:", error);
+  const res = await fetch(`${url}`);
+
+  if (!res.ok) {
+    return null;
   }
+
+  return res.json();
 };
 
 function InfoStrip({ info, label }: { info: string | number; label: string }) {
@@ -45,10 +42,24 @@ async function WorkoutDetails({ params }: WorkoutDetailasProps) {
     `https://api.api-store.workers.dev/api/fitlog/${id}`,
   );
 
-  return (
+  const jsx = !data ? (
+    <div className="p-10 md:p-30 space-y-8 text-center rounded-2xl">
+      <div className="space-y-2">
+        <h1 className="text-2xl font-brand font-bold uppercase">
+          something went wrong
+        </h1>
+        <p className="text-display">
+          Unable to load this workout right now. Please try again.
+        </p>
+      </div>
+      <button className="min-w-fit px-10 py-6 sm:py-5 capitalize text-black btn bg-brand rounded-lg">
+        try again
+      </button>
+    </div>
+  ) : (
     <Suspense
       fallback={
-        <div className="my-40 space-x-3 text-center">
+        <div className="my-50 space-x-3 text-center">
           <span className="mb-2 loading loading-spinner"></span>
           <span className="text-2xl">Loading {data.name}</span>
         </div>
@@ -95,18 +106,18 @@ async function WorkoutDetails({ params }: WorkoutDetailasProps) {
           </table>
           <div>
             <h2 className="font-bold uppercase text-lg">instructions</h2>
-            <div>
+            <ol>
               {data.instructions.map((item, index) => (
-                <p key={index} className="my-2">
+                <li key={index} className="my-2">
                   <span className=" mr-2 text-display text-xm sm:text-base">
                     {index + 1}.
                   </span>
                   <span className="text-mist-300 text-xm sm:text-base">
                     {item}
                   </span>
-                </p>
+                </li>
               ))}
-            </div>
+            </ol>
           </div>
           <div className="space-x-4 space-y-4 sm:space-y-0">
             <AddToPlanButton data={data} />
@@ -116,6 +127,8 @@ async function WorkoutDetails({ params }: WorkoutDetailasProps) {
       </section>
     </Suspense>
   );
+
+  return jsx;
 }
 
 export default WorkoutDetails;

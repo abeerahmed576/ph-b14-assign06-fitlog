@@ -143,13 +143,6 @@ function MyPlanStripCard({ data }: WorkoutStringCardProps) {
             remainingPlan={remainingPlan}
             setRemainingPlan={setRemainingPlan}
           />
-          {/* <button
-            onClick={() => handleMarkAsDone(data)}
-            className={`btn mr-2 px-3 py-2 font-medium text-xs lg:text-base capitalize rounded-full text-black bg-brand ${currentTab === "saved" ? "hidden" : ""}`}
-          >
-            <FontAwesomeIcon className="size-3" icon={faCheck} />
-            mark as done
-          </button> */}
         </div>
         <FontAwesomeIcon
           onClick={() => handleRemoveFromPlan(data)}

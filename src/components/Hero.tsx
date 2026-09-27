@@ -1,12 +1,14 @@
 import Image from "next/image";
 import Link from "next/link";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowDown } from "@fortawesome/free-solid-svg-icons";
 
 function Hero() {
   return (
     <section
       className="
       bg-card-600 rounded-2xl
-      container w-11/12 sm:mx-auto mx-4 mt-8 mb-8 sm:mt-12 sm:mb-12 p-8 sm:p-20
+      container w-11/12 sm:mx-auto mx-4 mt-8 sm:mt-12 mb-8 sm:mb-12 p-8 sm:p-12 lg:p-20
       flex flex-col sm:flex-row justify-between items-center gap-7"
     >
       <div className="space-y-7 text-center sm:text-start">
@@ -26,14 +28,15 @@ function Hero() {
           today's plan, and watch the week's work add up.
         </p>
         <Link href="/#library">
-          <button className="w-70 sm:w-max px-10 py-6 sm:py-5 capitalize text-black btn bg-brand rounded-lg">
+          <button className="w-70 sm:w-fit px-8 py-6 sm:py-5 capitalize text-black btn bg-brand rounded-lg">
             browse workouts
+            <FontAwesomeIcon icon={faArrowDown} />
           </button>
         </Link>
       </div>
 
       <Image
-        className="mr-0 sm:mr-5"
+        className="xl:mr-10 md:h-80 md:w-170 lg:h-110 lg:w-110"
         src="/banner.png"
         alt="fitlog banner"
         loading="eager"
