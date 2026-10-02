@@ -1,9 +1,10 @@
 import { Metadata } from "next";
-import { IWorkout } from "@/types/Workout.type";
 import Image from "next/image";
 import { Suspense } from "react";
 import AddToPlanButton from "@/components/workouts/AddToPlanButton";
 import SaveForLaterButton from "@/components/workouts/SaveForLaterButton";
+import getData from "@/lib/getData";
+import { IWorkout } from "@/types/Workout.type";
 
 export const metadata: Metadata = {
   title: "Workout Details - Fit Log",
@@ -14,16 +15,6 @@ interface WorkoutDetailasProps {
     id: number;
   };
 }
-
-const getWorkout = async (url: string) => {
-  const res = await fetch(`${url}`);
-
-  if (!res.ok) {
-    return null;
-  }
-
-  return res.json();
-};
 
 function InfoStrip({ info, label }: { info: string | number; label: string }) {
   return (
@@ -36,40 +27,37 @@ function InfoStrip({ info, label }: { info: string | number; label: string }) {
   );
 }
 
+export async function generateStaticParams() {
+  const workouts = await getData<IWorkout[]>(
+    "https://api.api-store.workers.dev/api/fitlog",
+    { cache: "force-cache" },
+  );
+  return workouts.map((workout: IWorkout) => ({
+    id: workout.id.toString(),
+  }));
+}
+
 async function WorkoutDetails({ params }: WorkoutDetailasProps) {
   const { id } = await params;
-  const data: IWorkout = await getWorkout(
+  const workout = await getData<IWorkout>(
     `https://api.api-store.workers.dev/api/fitlog/${id}`,
+    { cache: "force-cache" },
   );
 
-  const jsx = !data ? (
-    <div className="p-10 md:p-30 space-y-8 text-center rounded-2xl">
-      <div className="space-y-2">
-        <h1 className="text-2xl font-brand font-bold uppercase">
-          something went wrong
-        </h1>
-        <p className="text-display">
-          Unable to load this workout right now. Please try again.
-        </p>
-      </div>
-      <button className="min-w-fit px-10 py-6 sm:py-5 capitalize text-black btn bg-brand rounded-lg">
-        try again
-      </button>
-    </div>
-  ) : (
+  return (
     <Suspense
       fallback={
         <div className="my-50 space-x-3 text-center">
           <span className="mb-2 loading loading-spinner"></span>
-          <span className="text-2xl">Loading {data.name}</span>
+          <span className="text-2xl">Loading {workout.name}</span>
         </div>
       }
     >
       <section className="w-11/12 mx-4 sm:mx-0 md:mx-auto my-7 sm:my-20 container flex flex-col lg:flex-row gap-10 items-center justify-center">
         <div className="relative w-full lg:w-170 h-100 sm:h-200 rounded-2xl overflow-hidden">
           <Image
-            src={data.image}
-            alt={data.name}
+            src={workout.image}
+            alt={workout.name}
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
@@ -77,13 +65,13 @@ async function WorkoutDetails({ params }: WorkoutDetailasProps) {
         <div className="space-y-7">
           <div className="space-y-3">
             <h1 className="font-brand font-bold uppercase text-3xl sm:text-4xl">
-              {data.name}
+              {workout.name}
             </h1>
             <p className="text-display text-sm sm:text-lg">
-              {data.description}
+              {workout.description}
             </p>
             <div>
-              {data.muscleGroups.map((item: string, index) => (
+              {workout.muscleGroups.map((item: string, index: number) => (
                 <span
                   key={index}
                   className="mr-2 px-3 py-1 rounded-full font-semibold bg-brand text-sm text-black"
@@ -95,19 +83,19 @@ async function WorkoutDetails({ params }: WorkoutDetailasProps) {
           </div>
           <table className="bg-card-500 rounded-2xl border border-b-0 border-collapse border-gray-800 flex flex-col overflow-hidden">
             <tbody>
-              <InfoStrip info={data.equipment} label="equipment" />
-              <InfoStrip info={data.difficulty} label="difficulty" />
-              <InfoStrip info={data.sets} label="sets" />
-              <InfoStrip info={data.reps} label="reps" />
-              <InfoStrip info={data.duration} label="duration" />
-              <InfoStrip info={data.caloriesBurned} label="calories" />
-              <InfoStrip info={data.rating} label="rating" />
+              <InfoStrip info={workout.equipment} label="equipment" />
+              <InfoStrip info={workout.difficulty} label="difficulty" />
+              <InfoStrip info={workout.sets} label="sets" />
+              <InfoStrip info={workout.reps} label="reps" />
+              <InfoStrip info={workout.duration} label="duration" />
+              <InfoStrip info={workout.caloriesBurned} label="calories" />
+              <InfoStrip info={workout.rating} label="rating" />
             </tbody>
           </table>
           <div>
             <h2 className="font-bold uppercase text-lg">instructions</h2>
             <ol>
-              {data.instructions.map((item, index) => (
+              {workout.instructions.map((item: string, index: number) => (
                 <li key={index} className="my-2">
                   <span className=" mr-2 text-display text-xm sm:text-base">
                     {index + 1}.
@@ -120,15 +108,13 @@ async function WorkoutDetails({ params }: WorkoutDetailasProps) {
             </ol>
           </div>
           <div className="space-x-4 space-y-4 sm:space-y-0">
-            <AddToPlanButton data={data} />
-            <SaveForLaterButton data={data} />
+            <AddToPlanButton workout={workout} />
+            <SaveForLaterButton workout={workout} />
           </div>
         </div>
       </section>
     </Suspense>
   );
-
-  return jsx;
 }
 
 export default WorkoutDetails;

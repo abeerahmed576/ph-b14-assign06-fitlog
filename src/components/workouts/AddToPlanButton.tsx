@@ -7,12 +7,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IWorkout } from "@/types/Workout.type";
 import { toast } from "react-toastify";
 
-function AddToPlanButton({ data }: { data: IWorkout }) {
+function AddToPlanButton({ workout }: { workout: IWorkout }) {
   const { todaysPlan, setTodaysPlan, setRemainingPlan } =
     useContext(MyPlanContext);
 
   const handleAddToPlan = () => {
-    const isAlreadySelected = todaysPlan.some((item) => item.id === data.id);
+    const isAlreadySelected = todaysPlan.some((item) => item.id === workout.id);
 
     if (isAlreadySelected) {
       toast.error("Already added to plan!");
@@ -24,8 +24,8 @@ function AddToPlanButton({ data }: { data: IWorkout }) {
       return;
     }
 
-    setTodaysPlan((prevPlans) => [...prevPlans, data]);
-    setRemainingPlan((prevPlans) => [...prevPlans, data]);
+    setTodaysPlan((prevPlans) => [...prevPlans, workout]);
+    setRemainingPlan((prevPlans) => [...prevPlans, workout]);
     toast.success("Added to today's plan");
   };
 

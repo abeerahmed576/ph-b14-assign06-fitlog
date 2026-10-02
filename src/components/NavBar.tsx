@@ -47,7 +47,7 @@ const NavButton = ({ label, count }: NavButtonProps) => {
 };
 
 function NavBar() {
-  const { todaysPlan, savedForLater } = useContext(MyPlanContext);
+  const { remainingPlan, savedForLater } = useContext(MyPlanContext);
 
   return (
     <header className="h-18 sm:h-20 sticky top-0 z-40 border-b border-base-300 backdrop-blur">
@@ -84,7 +84,7 @@ function NavBar() {
           </ul>
         </div>
         <div className="navbar-end gap-2">
-          <NavButton label="plan" count={todaysPlan.length} />
+          <NavButton label="plan" count={remainingPlan.length} />
           <NavButton label="saved" count={savedForLater.length} />
         </div>
       </nav>

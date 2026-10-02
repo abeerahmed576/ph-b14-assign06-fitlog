@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 
 function NotFound() {
@@ -61,14 +63,15 @@ function NotFound() {
             fill="#E8EAEF"
           ></rect>
         </svg>
-        <h1 className="text-4xl font-brand">404 — Missed that lift</h1>
-        <p className="max-w-md text-base-content/70">
-          The page you wanted is not in the library. Head back to the floor and
-          pick a workout that exists.
+        <h1 className="text-4xl font-brand font-bold uppercase">
+          something went wrong
+        </h1>
+        <p className="max-w-md text-display">
+          Unable to load this workout right now. Please try again.
         </p>
-        <Link className="btn text-black bg-brand rounded-2xl" href="/#library">
-          Back to workouts
-        </Link>
+        <button className="min-w-fit px-10 py-6 sm:py-5 capitalize text-black btn bg-brand rounded-lg">
+          try again
+        </button>
       </div>
     </main>
   );
